@@ -435,7 +435,7 @@ int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
   /* FIXME */
 		
-	if(compare(getDynArr(heap, i), getDynArr(heap, j))){
+	if(compare(getDynArr(heap, i), getDynArr(heap, j)) == -1){
 		return i;
 	}else{
 		return j;
@@ -475,7 +475,7 @@ void addHeap(DynArr *heap, TYPE val)
 
 	while(pos != 0){
 		parent = ((pos - 1) / 2);	
-		if(compare(getDynArr(heap, pos), getDynArr(heap, parent))){
+		if(compare(getDynArr(heap, pos), getDynArr(heap, parent)) == -1){
 			swapDynArr(heap, parent, pos);
 			pos = parent;
 		}else{ 
@@ -501,12 +501,12 @@ void _adjustHeap(DynArr *heap, int maxInd, int pos)
 	
 	if(rightInd < maxInd){
 		int smlstChild = _smallerIndexHeap(heap, leftInd, rightInd);
-		if(compare(getDynArr(heap, smlstChild), getDynArr(heap, pos))){
+		if(compare(getDynArr(heap, smlstChild), getDynArr(heap, pos)) == -1){
 			swapDynArr(heap, smlstChild, pos);
 			_adjustHeap(heap, maxInd, smlstChild);
 		} 
 	}else if(leftInd < maxInd){
-		if(compare(getDynArr(heap, leftInd), getDynArr(heap, pos))){
+		if(compare(getDynArr(heap, leftInd), getDynArr(heap, pos)) == -1){
 			swapDynArr(heap, leftInd, pos);
 			_adjustHeap(heap, maxInd, leftInd);
 		}
@@ -564,7 +564,7 @@ void _buildHeap(DynArr *heap)
 void sortHeap(DynArr *heap)
 {
    /* FIXME */
-	int last = sizeDynArr(heap);
+	int last = (sizeDynArr(heap) - 1);
 	while(last > 0){
 		swapDynArr(heap, 0, last);
 		_adjustHeap(heap, last, 0);

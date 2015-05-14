@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+
 #include <assert.h>
 #include <string.h>
 #include "toDoList.h"
@@ -16,6 +15,10 @@
 Task* createTask (int priority, char *desc)
 {
 		/* FIXME */
+	Task* task = malloc(sizeof(struct Task));
+	task->priority = priority;
+	strcpy(task->description, desc);
+	return task;
 }
 
 /*  Save the list to a file
@@ -143,9 +146,19 @@ void deleteList(DynArr *heap)
 int compare(TYPE left, TYPE right)
 {
     /*FIXME: write this*/
-	struct data* d_left = NULL;
-	struct data* d_right = NULL;
+	struct Task* d_left = NULL;
+	struct Task* d_right = NULL;
 	
+	d_left = ((struct Task*)left);
+	d_right = ((struct Task*)right); 	
+	if(d_left->priority < d_right->priority){
+		return -1;
+	}else if(d_left->priority > d_right->priority){
+		return 1;
+	}	
+	return 0;
+	
+
 }
 
 /*Define this function, type casting the value of void * to the desired type*/
