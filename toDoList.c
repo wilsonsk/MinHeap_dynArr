@@ -1,4 +1,5 @@
-
+#include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <string.h>
 #include "toDoList.h"
@@ -99,6 +100,13 @@ void loadList(DynArr *heap, FILE *filePtr)
 void printList(DynArr *heap)
 {
     /* FIXME: Write this */
+
+	assert(!isEmptyDynArr(heap));
+	Task* task;
+	for(int i = 0; i < sizeDynArr(heap); i++){
+                task = getDynArr(heap, i);
+                printf("%d\t%s\n", task->priority, task->description);
+	}
 }
 
 /*  Delete the list
