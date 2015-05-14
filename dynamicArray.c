@@ -434,7 +434,13 @@ void _adjustHeap(DynArr *heap, int max, int pos);
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
   /* FIXME */
-  return 0;
+		
+	if(compare(getDynArr(heap, i), getDynArr(heap, j))){
+		return i;
+	}else{
+		return j;
+	}
+	
 }
 
 /*	Get the first node, which has the min priority, from the heap
@@ -447,8 +453,8 @@ TYPE getMinHeap(DynArr *heap)
 {
   /* FIXME */
 
-  /* Temporary returning NULL */
-  return NULL;
+	assert(sizeDynArr(heap) > 0);
+	return getDynArr(heap, 0);
 }
 
 /*	Add a node to the heap
@@ -461,6 +467,21 @@ TYPE getMinHeap(DynArr *heap)
 void addHeap(DynArr *heap, TYPE val)
 {
     /* FIXME */
+	assert(heap != 0);
+	int pos = sizeDynArr(heap);
+	int parent;
+
+	addDynArr(heap, val);
+
+	while(pos != 0){
+		parent = ((pos - 1) / 2);	
+		if(compare(getDynArr(heap, pos), getDynArr(heap, parent))){
+			swapDynArr(heap, parent, pos);
+			pos = parent;
+		}else{ 
+			return; 
+		}
+	}
 
 }
 
@@ -472,9 +493,27 @@ void addHeap(DynArr *heap, TYPE val)
 	pre:	max <= size
 	post:	heap property is maintained for nodes from index pos to index max-1  (ie. up to, but not including max)
 */
-void _adjustHeap(DynArr *heap, int max, int pos)
+void _adjustHeap(DynArr *heap, int maxInd, int pos)
 {
    /* FIXME */
+	int leftInd = (pos * 2 + 1);
+	int rightInd = (pos * 2 + 2);
+	
+	if(rightInd < maxInd){
+		int smlstChild = _smallerIndexHeap(heap, leftInd, rightInd);
+		if(compare(getDynArr(heap, smlstChild), getDynArr(heap, pos))){
+			swapDynArr(heap, smlstChild, pos);
+			_adjustHeap(heap, maxInd, smlstChild);
+		} 
+	}else if(leftInd < maxInd){
+		if(compare(getDynArr(heap, leftInd), getDynArr(heap, pos))){
+			swapDynArr(heap, leftInd, pos);
+			_adjustHeap(heap, maxInd, leftInd);
+		}
+	}else{
+		return;
+	}	
+ 
 }
 
 /*	Remove the first node, which has the min priority, from the heap
@@ -486,7 +525,13 @@ void _adjustHeap(DynArr *heap, int max, int pos)
 void removeMinHeap(DynArr *heap)
 {
    /* FIXME */
-
+	
+	assert(sizeDynArr(heap) > 0);
+	int lastInd = (sizeDynArr(heap) - 1);
+	putDynArr(heap, 0, getDynArr(heap, lastInd));
+	removeAtDynArr(heap, lastInd);
+	_adjustHeap(heap, lastInd, 0);	
+	
 }
 
 /* builds a heap from an arbitrary dynArray
@@ -499,6 +544,14 @@ void removeMinHeap(DynArr *heap)
 void _buildHeap(DynArr *heap)
 {
     /* FIXME */
+
+	int firstNonProperHeapInd = ((sizeDynArr(heap) / 2) - 1);
+	int max = sizeDynArr(heap);
+	
+	while(firstNonProperHeapInd > 0){
+		_adjustHeap(heap, max, firstNonProperHeapInd);
+		firstNonProperHeapInd--;
+	}
 }
 /*
     In-place sort of the heap
@@ -511,6 +564,11 @@ void _buildHeap(DynArr *heap)
 void sortHeap(DynArr *heap)
 {
    /* FIXME */
-
+	int last = sizeDynArr(heap);
+	while(last > 0){
+		swapDynArr(heap, 0, last);
+		_adjustHeap(heap, last, 0);
+		last--;
+	}
 }
 

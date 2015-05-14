@@ -143,6 +143,9 @@ void deleteList(DynArr *heap)
 int compare(TYPE left, TYPE right)
 {
     /*FIXME: write this*/
+	struct data* d_left = NULL;
+	struct data* d_right = NULL;
+	
 }
 
 /*Define this function, type casting the value of void * to the desired type*/
