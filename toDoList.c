@@ -40,7 +40,7 @@ void saveList(DynArr *heap, FILE *filePtr)
 {
 	int i;
 	Task* task;
-	assert(sizeDynArr(heap) > 0);
+	assert(!isEmptyDynArr(heap));
 	for(i = 0; i < sizeDynArr(heap); i++)
 	{
 		task = getDynArr(heap, i);

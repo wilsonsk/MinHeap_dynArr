@@ -434,6 +434,10 @@ void _adjustHeap(DynArr *heap, int max, int pos);
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
   /* FIXME */
+	
+	assert(i < sizeDynArr(heap));
+	assert(j < sizeDynArr(heap));
+	
 		
 	if(compare(getDynArr(heap, i), getDynArr(heap, j)) == -1){
 		return i;
@@ -453,7 +457,7 @@ TYPE getMinHeap(DynArr *heap)
 {
   /* FIXME */
 
-	assert(sizeDynArr(heap) > 0);
+	assert(!isEmptyDynArr(heap));
 	return getDynArr(heap, 0);
 }
 
@@ -496,6 +500,9 @@ void addHeap(DynArr *heap, TYPE val)
 void _adjustHeap(DynArr *heap, int maxInd, int pos)
 {
    /* FIXME */
+	
+	assert(maxInd <= sizeDynArr(heap));
+	
 	int leftInd = (pos * 2 + 1);
 	int rightInd = (pos * 2 + 2);
 	
@@ -526,7 +533,7 @@ void removeMinHeap(DynArr *heap)
 {
    /* FIXME */
 	
-	assert(sizeDynArr(heap) > 0);
+	assert(!isEmptyDynArr(heap));
 	int lastInd = (sizeDynArr(heap) - 1);
 	putDynArr(heap, 0, getDynArr(heap, lastInd));
 	removeAtDynArr(heap, lastInd);
@@ -545,6 +552,7 @@ void _buildHeap(DynArr *heap)
 {
     /* FIXME */
 
+	assert(!isEmptyDynArr(heap));
 	int firstNonProperHeapInd = ((sizeDynArr(heap) / 2) - 1);
 	int max = sizeDynArr(heap);
 	
@@ -564,6 +572,7 @@ void _buildHeap(DynArr *heap)
 void sortHeap(DynArr *heap)
 {
    /* FIXME */
+	assert(!isEmptyDynArr(heap));
 	int last = (sizeDynArr(heap) - 1);
 	while(last > 0){
 		swapDynArr(heap, 0, last);
